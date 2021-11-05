@@ -1,32 +1,46 @@
 package com.codeup.springblog.controllers;
 
+import com.codeup.springblog.models.Ad;
+import com.codeup.springblog.repositories.AdRepository;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 public class AdController {
 
+    private final AdRepository adRepository;
+
+    public AdController(AdRepository adRepository) {
+        this.adRepository = adRepository;
+    }
+
     @GetMapping("/ads")
     @ResponseBody
-    public String showAds() {
-        return "Showing all the ads";
+    public List<Ad> showAds() {
+        return adRepository.findAll();
     }
 
 
-    @GetMapping("/ads/{id}")
+//    @GetMapping("/ads/{id}")
+//    @ResponseBody
+//    public String showSingleAd(@PathVariable long id) {
+//        return "Showing ad: " + id;
+//    }
+
+    @GetMapping("/ads/{title}")
     @ResponseBody
-    public String showSingleAd(@PathVariable long id) {
-        return "Showing ad: " + id;
+    public Ad getByTitle(@PathVariable String title){
+        return adRepository.findByTitle(title);
     }
 
 
     @PostMapping("/ads")
     @ResponseBody
-    public String createAds() {
-        return "Creating an ad";
+    public String createAds(@RequestBody Ad newAd) {
+        adRepository.save(newAd);
+        return String.format("Ad created with an ID of: %s", newAd.getId());
     }
 
 
