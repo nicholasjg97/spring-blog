@@ -9,9 +9,12 @@
   <h1>Welcome to the Coffee page!</h1>
 
 
-  <div th:if="${selection}">
-    <h2>You selected <span th:text="${selection.roast}"></span> roast!</h2>
-    <p>We have an amazing <span th:text="${selection.roast}"></span> roast from <span th:text="${selection.origin}"></span></p>
+  <div th:if="${selections}">
+    <h2>You selected <span th:text="${roast}"></span> roast!</h2>
+    <p>Here are some options for you:</p>
+    <ul>
+      <li th:each="selection : ${selections}"><p><span th:text="${selection.brand}"></span> <span th:text="${selection.origin}"></span> <span th:text="${selection.roast}"></span> roast</p></li>
+    </ul>
   </div>
 
 
