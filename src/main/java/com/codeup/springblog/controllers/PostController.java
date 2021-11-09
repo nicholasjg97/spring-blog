@@ -41,9 +41,8 @@ public class PostController {
 
     @GetMapping("/posts/{id}")
     @ResponseBody
-    public String showSinglePost(@PathVariable long id, Model model) {
-        model.addAttribute("post", postsDao.getById(id));
-        return "posts/show";
+    public String showSinglePost(@PathVariable long id) {
+        return "Here is the post " + id;
     }
 
     @GetMapping("/posts/create")
@@ -53,24 +52,9 @@ public class PostController {
     }
 
     @PostMapping("/posts/create")
-    public String insert(@ModelAttribute Post post, @RequestParam List<String> urls) {
-        List<com.codeup.dracospringblog.models.PostImage> images = new ArrayList<>();
+    public String insert(@ModelAttribute Post post) {
         User author = userDao.getById(1L);
-
-
-        // create list of post image objects to pass to the new post constructor
-        for (String url : urls) {
-            com.codeup.dracospringblog.models.PostImage postImage = new com.codeup.dracospringblog.models.PostImage(url);
-            postImage.setPost(post);
-            images.add(postImage);
-        }
-
-        post.setImages(images);
-
         post.setUser(author);
-
-        // save a post object with images
-
         postsDao.save(post);
 
         emailService.prepareAndSend(post, "You submitted: " + post.getTitle(), post.getBody());
