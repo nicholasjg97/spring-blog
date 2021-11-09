@@ -38,9 +38,9 @@ public class AdController {
         return adRepository.findById(id).get();
     }
 
-    @GetMapping("/ads/{title}")
+    @GetMapping("/ads/byTitle")
     @ResponseBody
-    public Ad getByTitle(@PathVariable String title){
+    public List<Ad> getByTitle(@RequestParam(name="title") String title){
         return adRepository.findByTitle(title);
     }
 

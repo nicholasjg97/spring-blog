@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface AdRepository extends JpaRepository<Ad, Long> {
 
-    Ad findByTitle(String title); // select * from ads where title = title
+    List<Ad> findByTitle(String title); // select * from ads where title = title
     Ad findByDescription(String title);
 
 //    @Query(nativeQuery = true, value="select * from ads where title like :term%")
