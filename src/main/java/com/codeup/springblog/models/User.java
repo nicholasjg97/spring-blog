@@ -20,11 +20,14 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private List<Post> posts;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
+    private List<Ad> ads;
+
     public User() {
     }
-
-    @OneToMany (cascade = CascadeType.ALL, mappedBy = "user")
-    private List<Post> posts;
 
     public User(String username, String email, String password) {
         this.username = username;
